@@ -1,0 +1,67 @@
+package test;
+
+import java.util.ArrayList;
+
+public class BuyTicketProblem {
+	
+	
+
+	public static void main(String[] args) {
+		ArrayList<Integer> Queue=new ArrayList<Integer>();
+		/*Queue.add(2);
+		Queue.add(6);
+		Queue.add(3);
+		Queue.add(5);
+		Queue.add(2);*/
+
+		Queue.add(5);
+		Queue.add(2);
+		Queue.add(2);
+		Queue.add(3);
+		
+		BuyTicketProblem obj= new BuyTicketProblem();
+		System.out.println("Final waiting time of jonh is -"+obj.WaitingTime(Queue, 3));
+	}
+	
+	ArrayList<Integer> newQueue;
+	
+	public int WaitingTime(ArrayList<Integer> tickets, int position) {
+       ArrayList<Integer>  processQueueTemp=tickets;
+       int johnTicketsInWaiting =tickets.get(position);
+       int ticketCollected=0;
+       int jonhsCollectedCount=0;
+       
+       while(johnTicketsInWaiting!= jonhsCollectedCount ) {
+    	  // System.out.println("John's waiting tickets queue start - "+jonhsCollectedCount);
+    	   newQueue=new ArrayList<>();
+    	   for(int i=0; i<processQueueTemp.size(); i++) {
+    		   if(position==i) {
+    			   jonhsCollectedCount++;
+    			   if(johnTicketsInWaiting== jonhsCollectedCount) {
+    				   ticketCollected++;
+    				   break;
+    			   }else {
+    				   getTicket(processQueueTemp.get(i));
+    				   position=newQueue.size()-1;
+    			   }
+    		   }else {
+    			   getTicket(processQueueTemp.get(i)); 
+    		   }
+    		   ticketCollected++;
+    	   }
+    	   processQueueTemp.clear();;
+    	   processQueueTemp.addAll(newQueue);
+    	   newQueue.clear();
+    	  //System.out.println("John's waiting tickets queue end - "+johnTicketsInWaiting);
+       }
+        return ticketCollected;
+    }
+	
+	public void getTicket(int numberOfTicketsRequired) {
+		numberOfTicketsRequired--;
+		if (numberOfTicketsRequired!=0) 
+			newQueue.add(numberOfTicketsRequired);
+	}
+	
+
+}
